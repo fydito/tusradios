@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111318">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Tus Radios</title>
+<link rel="icon" href="icon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#111318;--text:#f7f8fb;--muted:#929bad;--accent:#7b20f5;--cyan:#7ee2ff;--border:#303644;--panel:#181b22}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Tahoma,sans-serif}
+body{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:max(18px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 15%,#2b1747 0,#15151c 38%,#0d0f13 100%)}
+audio{display:none}
+.player{width:min(100%,430px);background:linear-gradient(145deg,#1c1f28,#101217);border:1px solid #303644;border-radius:24px;padding:18px;box-shadow:0 24px 60px #0009}
+.brand{text-align:center;font-weight:800;font-size:13px;letter-spacing:.7px;color:#b99cff;margin-bottom:14px}.brand span{color:#fff}
+.main{display:flex;flex-direction:column;align-items:center}
+.visual{width:min(68vw,270px);aspect-ratio:1/1;object-fit:cover;border-radius:22px;background:#090a0d;box-shadow:0 14px 35px #0009;margin-bottom:18px}
+.info{width:100%;text-align:center}.line1{display:flex;justify-content:center;align-items:center;gap:7px;min-width:0}.station-name{font-size:24px;line-height:1.1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:78%}.live{font-size:9px;font-weight:900;color:#ff6677;white-space:nowrap}.frequency{font-size:12px;color:#b99cff;font-weight:800;margin-top:6px}
+.controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px}.controls button{width:48px;height:46px;border:0;border-radius:14px;background:#242936;color:var(--cyan);cursor:pointer;font-size:19px;padding:0}.controls .play{width:62px;height:58px;background:linear-gradient(135deg,#6c16ec,#9852ff);color:#fff;font-size:25px;box-shadow:0 8px 24px #7b20f555}
+.volume{width:100%;display:flex;align-items:center;gap:10px;margin-top:18px}.volume button{width:34px;border:0;background:transparent;color:#fff;font-size:17px;padding:0}.volume input{width:100%;height:5px;accent-color:var(--accent)}
+.bottom{width:100%;margin-top:18px}.bottom-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}.bottom label{font-size:11px;color:var(--muted)}.status{font-size:10px;color:var(--muted);white-space:nowrap}
+select{width:100%;height:46px;border:1px solid var(--border);border-radius:13px;background:#20242d;color:var(--text);padding:0 12px;font:700 13px Segoe UI,Tahoma,sans-serif;outline:none}
+@media (max-height:700px){body{align-items:flex-start}.visual{width:min(48vw,205px);margin-bottom:12px}.player{padding:14px}.brand{margin-bottom:9px}.station-name{font-size:20px}.controls{margin-top:12px}.volume,.bottom{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="player">
+  <div class="brand">📻 <span>Tus Radios</span></div>
+  <div class="main">
+    <img id="visual" class="visual" src="vinilo1.gif" alt="Animación de la radio">
+    <div class="info">
+      <div class="line1"><h1 id="station-name" class="station-name">La 100</h1><span class="live">● EN VIVO</span></div>
+      <div id="frequency" class="frequency">99.9 FM</div>
+      <div class="controls">
+        <button id="prev" title="Anterior" aria-label="Radio anterior">◀</button>
+        <button id="play" class="play" title="Reproducir" aria-label="Reproducir">▶</button>
+        <button id="next" title="Siguiente" aria-label="Radio siguiente">▶</button>
+      </div>
+      <div class="volume"><button id="mute" title="Silenciar" aria-label="Silenciar">🔊</button><input id="volume" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Volumen"></div>
+    </div>
+    <div class="bottom">
+      <div class="bottom-top"><label for="station-select">📻 Emisora</label><span id="status" class="status">Lista</span></div>
+      <select id="station-select"></select>
+    </div>
+  </div>
+  <audio id="audio" preload="none"></audio>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="script.js"></script>
+</body>
+</html>
